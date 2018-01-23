@@ -1,0 +1,11 @@
+<div style="display: block" class="components">
+  <canvas baseChart
+          [data]="doughnutChartData"
+          [labels]="doughnutChartLabels"
+          [colors]="backgroundColor"
+          [chartType]="doughnutChartType"
+          (chartHover)="chartHovered($event)"
+          (chartClick)="chartClicked($event)"></canvas>
+</div>
+
+<button class="btn btn-success" (click)="change()">click</button>

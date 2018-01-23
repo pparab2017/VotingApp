@@ -1,1 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+.components{
+  background-color: white;
+  margin-top: 0px; padding: 50px;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+}
+
+.my-header{
+  background-color: #34495D
+}
