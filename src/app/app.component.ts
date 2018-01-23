@@ -14,7 +14,7 @@ export class AppComponent implements OnInit  {
   constructor(private accountService: AccountService) {}
 
   ngOnInit() {
-    localStorage.clear();
+    //localStorage.clear();
     if (this.accountService.getLoginUser()) {
       this.loggedIn = true;
     }

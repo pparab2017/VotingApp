@@ -11,6 +11,7 @@ import {HttpClient, HttpClientModule} from '@angular/common/http';
 import { VotingComponent } from './voting/voting.component';
 import { DoughnutChartComponent } from './doughnut-chart/doughnut-chart.component';
 import {ChartsModule} from 'ng2-charts';
+import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import {ChartsModule} from 'ng2-charts';
   imports: [
     BrowserModule,
     HttpClientModule,
-    ChartsModule
+    ChartsModule,
+    BrowserAnimationsModule
   ],
   providers: [AccountService, HttpClient],
   bootstrap: [AppComponent]
