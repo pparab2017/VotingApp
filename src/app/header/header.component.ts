@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AccountService} from '../account.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -8,13 +9,16 @@ import {AccountService} from '../account.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private accountService: AccountService) { }
+  constructor(private accountService: AccountService, private router: Router) { }
 
-  onMenuChange(selected: string) {
-    this.accountService.changeMenu(selected);
-  }
 
   ngOnInit() {
   }
+
+  logout() {
+    this.accountService.logout();
+    this.router.navigate(['/'] );
+  }
+
 
 }

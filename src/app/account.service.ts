@@ -7,7 +7,7 @@ import {UserModal} from './modals/user.modal';
 @Injectable()
 export class AccountService {
 
-  menuChanged = new EventEmitter<string>();
+
   loggedInsuccess = new EventEmitter<boolean>();
   userLoggedIn = false;
 
@@ -15,32 +15,34 @@ export class AccountService {
   constructor(private http: HttpClient) {}
 
 
-  changeMenu(loadedMenu: string) {
-    this.menuChanged.emit(loadedMenu);
-    console.log(loadedMenu);
+  inAuthenticated() {
+    const promise = new Promise(
+      ((resolve, reject) => {
+        console.log(localStorage.getItem('user'));
+        const isLoggedIn = JSON.parse(localStorage.getItem('user')) === null ? false : true;
+        resolve(isLoggedIn);
+      })
+    );
+    return promise;
   }
 
   getLoginUser(): any {
     return JSON.parse(localStorage.getItem('user'));
   }
 
+  storeUserObject(user: UserModal) {
+    localStorage.setItem('user', JSON.stringify(user));
+  }
+
+  logout() {
+    localStorage.clear();
+  }
+
+
   login(username: string, password: string) {
     console.log(username + ' ' + password);
     return this.http.post('http://ec2-13-58-146-253.us-east-2.compute.amazonaws.com/project_api/login',
-      {'email': username, 'password': password}).subscribe(
-      (response: UserModal) => {
-        console.log(response);
-        if (response.status === 'ok') {
-          this.userLoggedIn = true;
-          this.loggedInsuccess.emit(this.userLoggedIn);
-          localStorage.setItem('user', JSON.stringify(response));
-        }
-      },
-      (error) => {
-        console.log('in the error');
-        console.log(error);
-      }
-    );
+      {'email': username, 'password': password});
   }
 
 }

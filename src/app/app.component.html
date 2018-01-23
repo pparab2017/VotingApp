@@ -14,9 +14,10 @@
 <div class="container">
   <div class="row">
     <div class="col-md-6">
-      <app-login *ngIf="selectedMenu === 'login' && !loggedIn" ></app-login>
-      <app-registration *ngIf="selectedMenu === 'register' && !loggedIn" ></app-registration>
-      <app-voting *ngIf="loggedIn"></app-voting>
+      <router-outlet></router-outlet>
+      <!--<app-login *ngIf="selectedMenu === 'login' && !loggedIn" ></app-login>-->
+      <!--<app-registration *ngIf="selectedMenu === 'register' && !loggedIn" ></app-registration>-->
+      <!--<app-voting *ngIf="loggedIn"></app-voting>-->
     </div>
 
     <div class="col-md-6">

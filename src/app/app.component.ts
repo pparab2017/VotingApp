@@ -10,6 +10,7 @@ export class AppComponent implements OnInit  {
   title = 'Voting App';
   loggedIn = false;
 
+
   selectedMenu = 'login';
   constructor(private accountService: AccountService) {}
 
@@ -18,11 +19,6 @@ export class AppComponent implements OnInit  {
     if (this.accountService.getLoginUser()) {
       this.loggedIn = true;
     }
-    this.accountService.menuChanged.subscribe(
-      (menu: string) => {
-        this.selectedMenu = menu;
-      }
-    );
 
     this.accountService.loggedInsuccess.subscribe(
       (isTrue: boolean) => {

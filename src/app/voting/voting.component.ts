@@ -9,10 +9,10 @@ import {state, trigger, style, transition, animate} from '@angular/animations';
   animations: [
     trigger('divState', [
       state('0', style({
-        width: '{{with}}'
+        'width': '{{with}}'
       }) , { params: {with: '5%'}}),
       state('1', style({
-        width: '{{with}}'
+        'width': '{{with}}'
       }), { params: {with: '5%'}}),
       // transition('0 => 1', animate(1000)),
       // transition('1 => 0', animate(1000))
@@ -30,7 +30,7 @@ export class VotingComponent implements OnInit {
 
   animate(val: number) {
     let toChange = this.votes.slice();
-    setTimeout(() => {
+
 
     toChange[val].val = toChange[val].val + 1;
     let sum = 0;
@@ -45,11 +45,14 @@ export class VotingComponent implements OnInit {
     }
 
       toChange = toChange.sort((n1, n2) => n2.val - n1.val);
+
+// use ngstyle instead of animate !
+
+
+
       this.votes = toChange;
 
-    }, 0);
-
-
+    console.log(this.votes);
 
 
 
