@@ -15,10 +15,12 @@ export class AppComponent implements OnInit  {
   constructor(private accountService: AccountService) {}
 
   ngOnInit() {
-    //localStorage.clear();
+
     if (this.accountService.getLoginUser()) {
       this.loggedIn = true;
     }
+
+
 
     this.accountService.loggedInsuccess.subscribe(
       (isTrue: boolean) => {

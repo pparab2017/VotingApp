@@ -8,7 +8,7 @@
 
   <div class="container-fluid">
     <div class="navbar-header">
-      <a href="#" class="navbar-brand">Voting App!</a>
+      <a href="#" class="navbar-brand"><span class="glyphicon glyphicon-heart"></span> Voting App!</a>
     </div>
 
     <div class="collapse navbar-collapse">
@@ -18,11 +18,11 @@
       </ul>
 
 
-      <ul class="nav navbar-nav navbar-right">
+      <ul *ngIf="isLoggedIn" class="nav navbar-nav navbar-right">
         <li class="dropdown" appDropdown>
-          <a  class="dropdown-toggle" role="button">Manage <span class="caret"></span> </a>
+          <a  class="dropdown-toggle" role="button">{{username}} <span class="caret"></span> </a>
           <ul class="dropdown-menu">
-            <li> <a (click)="logout()" > logout</a></li>
+            <li> <a style="cursor: pointer" (click)="logout()" > logout</a></li>
 
           </ul>
         </li>

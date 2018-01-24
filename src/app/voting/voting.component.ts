@@ -1,66 +1,98 @@
 import {Component, OnInit} from '@angular/core';
-import {state, trigger, style, transition, animate} from '@angular/animations';
+import {AccountService} from '../account.service';
+import {UserModal} from '../modals/user.modal';
+import {OptionModal} from '../modals/option.modal';
+import {isUndefined} from 'util';
+
 
 
 @Component({
   selector: 'app-voting',
   templateUrl: './voting.component.html',
-  styleUrls: ['./voting.component.css'],
-  animations: [
-    trigger('divState', [
-      state('0', style({
-        'width': '{{with}}'
-      }) , { params: {with: '5%'}}),
-      state('1', style({
-        'width': '{{with}}'
-      }), { params: {with: '5%'}}),
-      // transition('0 => 1', animate(1000)),
-      // transition('1 => 0', animate(1000))
-    ])
-  ]
+  styleUrls: ['./voting.component.css']
 })
 export class VotingComponent implements OnInit {
-  votes = [{state: '0', width: '0%', name: 'Apple', val: 0, color: '#FF1744'},
-            {state: '0' , width: '0%', name: 'Banana', val: 0, color: '#FFD54F'},
-            {state: '0', width: '0%', name: 'Orange', val: 0, color: '#F57C00'},
-            {state: '0', width: '0%', name: 'Pineapple', val: 0, color: '#FFF59D'}];
- // voterArray = [0, 0, 0, 0];
+  votes: OptionModal[];
+  loggedInUser: UserModal;
+  userImage = '../assets/girl.png';
+  userVote = '';
 
-  constructor() { }
-
-  animate(val: number) {
-    let toChange = this.votes.slice();
+  constructor(private accountService: AccountService) {
+  this.votes = new Array<OptionModal>();
+  }
 
 
-    toChange[val].val = toChange[val].val + 1;
+
+  reorderOptions() {
+    let toChange = this.votes;
+    console.log(this.votes);
     let sum = 0;
-    for (const v of toChange) {
+    for (const v of  toChange) {
       sum = sum + v.val;
     }
-
     for (let i = 0; i < toChange.length; i++ ) {
-      const per = ( toChange[i].val / sum ) * 100;
-      toChange[i].width = per + '%';
-      toChange[i].state = toChange[i].state === '0' ? '1' : '0';
+      const per = (  toChange[i].val / sum ) * 100;
+      toChange[i].width =  per + '%';
     }
+    toChange =  toChange.sort((n1, n2) => n2.val - n1.val);
+    this.votes =  toChange;
+  }
 
-      toChange = toChange.sort((n1, n2) => n2.val - n1.val);
+  submiteVote() {
+    this.accountService.submitVote(this.userVote).subscribe(
+      (response: any) => {
+        if (response.status === 'ok') {
+          this.accountService.setOptions(response.voting);
+          this.votes = this.accountService.userOptions;
+          this.loggedInUser = response.user;
+          this.reorderOptions();
+        }
+      },
+      (error) => {
+        console.log('in the error');
+        console.log(error);
+      }
+    );
+    this.reorderOptions();
+  }
 
-// use ngstyle instead of animate !
 
-
-
-      this.votes = toChange;
-
-    console.log(this.votes);
-
-
-
-
-
+  onclick(uservote: string) {
+    console.log(uservote);
+    this.userVote = uservote;
   }
 
   ngOnInit() {
+
+    this.loggedInUser = this.accountService.getLoginUser() ? this.accountService.getLoginUser() : new UserModal();
+    if (this.loggedInUser.gender === 'MALE') {
+      this.userImage = '../assets/boy.png';
+    }
+
+
+    if (isUndefined(this.accountService.userOptions)) {
+        this.accountService.getVotes().subscribe(
+          (response: any) => {
+            if (response.status === 'ok') {
+              this.accountService.setOptions(response.voting);
+              this.votes = this.accountService.userOptions;
+              this.loggedInUser = response.user;
+              this.reorderOptions();
+            }
+          },
+          (error) => {
+            console.log('in the error');
+            console.log(error);
+          }
+        );
+    } else {
+        this.votes = this.accountService.userOptions;
+      this.reorderOptions();
+      }
+
+
+
+
   }
 
 }

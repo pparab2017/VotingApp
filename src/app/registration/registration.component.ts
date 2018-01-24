@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {AccountService} from '../account.service';
+import {NgForm} from '@angular/forms';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-registration',
@@ -6,10 +9,41 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent implements OnInit {
-
-  constructor() { }
+  errorMessage = '';
+  constructor(private accountService: AccountService, private router: Router) { }
 
   ngOnInit() {
+    this.accountService.getUVotes().subscribe(
+      (response: any) => {
+        if (response.status === 'ok') {
+          this.accountService.setOptions(response.voting);
+        }
+      },
+      (error) => {
+        this.errorMessage = error.error.message;
+      }
+    );
+  }
+
+  onclick(email: string, pass: string, fname: string, lname: string, f: NgForm) {
+    if (f.valid) {
+
+      this.accountService.register(email, pass, fname, lname).subscribe(
+        (response: any) => {
+          if (response.status === 'ok') {
+            this.accountService.setRegistered(true);
+            this.router.navigate(['/']);
+
+          }
+        },
+        (error) => {
+          this.errorMessage = error.error.message;
+        }
+      );
+
+    }else {
+
+    }
   }
 
 }

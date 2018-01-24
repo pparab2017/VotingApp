@@ -2,39 +2,45 @@
   <h2>New User</h2>
   <hr>
 
-  <form method="post" >
+  <form  (ngSubmit) = "onclick(email.value, pass.value, fname.value, lname.value, f)" #f="ngForm" >
 
     <div class="form-group" >
       <div >
-        <input type="email" id="first-name" name="first-name" class="form-control" placeholder="First Name">
+        <input type="text" #fname ngModel id="first-name" name="first-name" class="form-control" placeholder="First Name" required>
       </div>
     </div>
 
     <div class="form-group" >
       <div >
-        <input type="email" id="last-name" name="last-name" class="form-control" placeholder="Last Name">
+        <input type="text" #lname ngModel id="last-name" name="last-name" class="form-control" placeholder="Last Name" required>
       </div>
     </div>
 
     <div class="form-group" >
       <div >
-        <input type="email" id="login-name" name="login-name" class="form-control" placeholder="Email Address">
+        <input type="email" #email ngModel id="login-name"
+               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+               name="login-name" class="form-control" placeholder="Email Address" required>
       </div>
     </div>
     <div class="form-group">
       <div>
 
-        <input type="password" id="login-pass" name="login-pass" class="form-control" placeholder="Password">
+        <input type="password" #pass="ngModel" ngModel id="login-pass" name="login-pass" class="form-control" placeholder="Password" required>
       </div>
     </div>
 
     <div class="form-group">
       <div>
-
-        <input type="password" id="login-c-pass" name="login-c-pass" class="form-control" placeholder="c-Password">
+        <input type="password" #cpass="ngModel" ngModel id="login-c-pass" name="login-c-pass" class="form-control" placeholder="Confirm Password" required>
       </div>
     </div>
-    <button type="submit" class="btn btn-success btn-block btn"><b>Register</b></button>
+    <button type="submit" class="btn btn-success btn-block btn"
+            [disabled] = "!f.valid || ((pass.value !== cpass.value))" ><b>Register</b></button>
+
+    <span class="help-block" *ngIf ="((pass.value !== cpass.value))"> Password don't match</span>
   </form>
 
 </div>
+
+<div class="col-md-12 "><div *ngIf="errorMessage" class="alert alert-danger " role="alert"><b>{{errorMessage}}</b></div></div>

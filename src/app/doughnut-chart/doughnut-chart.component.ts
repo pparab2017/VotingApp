@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartsModule } from 'ng2-charts';
+import {AccountService} from '../account.service';
+import {OptionModal} from '../modals/option.modal';
 
 
 @Component({
@@ -11,9 +13,10 @@ import { ChartsModule } from 'ng2-charts';
 export class DoughnutChartComponent implements OnInit {
 
   public doughnutChartLabels: string[] = ['Apples', 'Banana', 'Orange', 'Pineapple'];
-  public doughnutChartData: number[] = [350, 450, 100, 200];
-  public backgroundColor:  any[] = [{ backgroundColor: ['#FF1744', '#F57C00', '#FFD54F', '#FFF59D'] }];
+  public doughnutChartData: number[] = [0, 0, 0, 0, 0];
+ // public backgroundColor:  any[] = [{ backgroundColor: ['#FF1744', '#F57C00', '#FFD54F', '#FFF59D'] }];
   public doughnutChartType: string = 'doughnut';
+  private optionsObject: OptionModal[];
 
   // events
   public chartClicked(e: any): void {
@@ -24,13 +27,47 @@ export class DoughnutChartComponent implements OnInit {
     console.log(e);
   }
 
-  public change(){
-    this.doughnutChartData = [700, 450, 100, 200];
+  public change() {
+    this.accountService.getUVotes().subscribe(
+      (response: any) => {
+        if (response.status === 'ok') {
+          this.accountService.setOptions(response.voting);
+        }
+      },
+      (error) => {
+        console.log('in the error');
+        console.log(error);
+      }
+    );
   }
 
-  constructor() { }
+  constructor(private accountService: AccountService) { }
 
   ngOnInit() {
+    this.optionsObject = this.accountService.userOptions;
+    console.log(this.optionsObject);
+
+      this.accountService.options.subscribe(
+        (params: OptionModal[]) => {
+          const value: number[] = new Array(params.length);
+          const text: string[] = new Array(params.length);
+          for ( let i = 0; i < params.length; i++) {
+            if (params[i].name === 'Apple') {
+              value[0] = params[i].val; }
+            if (params[i].name === 'Banana') {
+              value[1] = params[i].val; }
+            if (params[i].name === 'Orange') {
+              value[2] = params[i].val; }
+            if (params[i].name === 'Pineapple'){
+              value[3] = params[i].val; }
+          }
+          this.doughnutChartData  = value;
+          this.doughnutChartLabels = text;
+        }
+      );
+
+
+
   }
 
 }

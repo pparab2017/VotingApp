@@ -1,5 +1,5 @@
 .outer-vote-div{
-  width: 100%; height: 40px; border: 1px solid #0288D1;
+  width: 100%; height: 40px; border: 1px solid #4CAF50;
   margin-top: 20px;
   border-radius: 4px;
   -webkit-border-radius: 4px;
@@ -13,11 +13,15 @@
 
 
 .inner-vote-div{
-  height: 100%; color: #0288D1;
-  background-color: #4FC3F7 !important;
+  height: 100%;
+  color: #F1F8E9;
+  background-color: #C8E6C9 !important;
   border-radius: 4px;
   width: 0%;
 
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
 }
+
+
+

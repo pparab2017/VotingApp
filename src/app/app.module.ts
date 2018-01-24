@@ -16,6 +16,8 @@ import {AuthGaurd} from './auth-gaurd.service';
 import {HttpModule} from '@angular/http';
 import {NoAuthGaurd} from './no-auth-gaurd.service';
 import {DropdownDirective} from './directives/dropdown.directive';
+import {FormsModule} from '@angular/forms';
+import { InfoComponent } from './info/info.component';
 
 
 
@@ -34,7 +36,8 @@ const appRoutes: Routes = [
     RegistrationComponent,
     VotingComponent,
     DoughnutChartComponent,
-    DropdownDirective
+    DropdownDirective,
+    InfoComponent
   ],
   imports: [
     BrowserModule,
@@ -42,6 +45,7 @@ const appRoutes: Routes = [
     ChartsModule,
     HttpModule,
     BrowserAnimationsModule,
+    FormsModule,
   RouterModule.forRoot(appRoutes)
   ],
   providers: [AccountService, HttpClient, AuthGaurd, NoAuthGaurd],

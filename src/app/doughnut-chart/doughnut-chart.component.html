@@ -1,4 +1,5 @@
-<div style="display: block" class="components">
+<div style="display: block" class="components text-center">
+  <h4>Overall stats</h4>
   <canvas baseChart
           [data]="doughnutChartData"
           [labels]="doughnutChartLabels"
@@ -7,7 +8,7 @@
           (chartHover)="chartHovered($event)"
           (chartClick)="chartClicked($event)"></canvas>
 
-  <button class="btn btn-success" (click)="change()">Refresh</button>
+  <a class="text-center" style="cursor: pointer" (click)="change()">Refresh</a>
 </div>
 
 

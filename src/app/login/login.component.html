@@ -1,3 +1,5 @@
+
+<form (ngSubmit) = "onclick(email.value, pass.value, f)" #f="ngForm" >
 <div class="col-md-12 text-center components" >
   <h2>Login</h2>
   <hr>
@@ -5,16 +7,45 @@
 
     <div class="form-group" >
       <div>
-        <input type="email" id="login-name" #email name="login-name" class="form-control" placeholder="Email Address">
+        <input type="email" ngModel id="login-name" #email="ngModel"
+               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+               name="login-name" class="form-control" placeholder="Email Address" required>
       </div>
+
     </div>
     <div class="form-group">
       <div>
 
-        <input type="password" #pass id="login-pass" name="login-pass" class="form-control" placeholder="Password">
+        <input type="password" ngModel #pass id="login-pass" name="login-pass" class="form-control" placeholder="Password" required>
       </div>
+
     </div>
-    <button type="button" (click)="onclick(email.value, pass.value)" class="btn btn-success btn-block btn"><b>Log in</b></button>
+
+    <button type="submit" class="btn btn-success btn-block btn"
+    [disabled] = "!f.valid" ><b>Log in</b></button>
+
+  <!--<span class="help-block" *ngIf ="!email.valid && email.touched"> Please enter a valid Email</span>-->
+</div>
+
+  <div class="col-md-12 " >
+  <div *ngIf="registerdJustnow" class="alert alert-success " role="alert"><b>Register Successfully, Please login to the system!</b></div>
+
+  <div *ngIf="errorMessage" class="alert alert-danger " role="alert"><b>{{errorMessage}}</b></div>
+  </div>
+
+</form>
 
 
+
+<div class="col-md-12 component">
+  <img src="../assets/cafe.jpg" style="width: 100%"/>
+  <div class="component-inner-div">
+  Our school’s cafeteria wishes to provide healthier snacking options
+  for its students. The school would like to know which fruit their
+  students prefer by providing a number options and having the
+  students vote on their favorites.
+
+  Please login to the system and register you vote, If you don't have an account yet
+  please register!!
+  </div>
 </div>

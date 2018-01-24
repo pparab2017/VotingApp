@@ -6,5 +6,6 @@ export class UserModal {
   public status: string;
   public gender: string;
   public userEmail: string;
+  public vote: string;
 
 }
