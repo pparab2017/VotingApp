@@ -24,16 +24,33 @@ export class DoughnutChartComponent implements OnInit {
   }
 
   public change() {
-    this.accountService.getUVotes().subscribe(
-      (response: any) => {
-        if (response.status === 'ok') {
-          this.accountService.setOptions(response.voting);
+
+    if (this.accountService.getLoginUser()) {
+      this.accountService.getVotes().subscribe(
+        (response: any) => {
+          if (response.status === 'ok') {
+            this.accountService.setOptions(response.voting);
+            this.accountService.updateUser(response.user);
+          }
+        },
+        (error) => {
+          console.log('ERROR while fetching Votes: ' + error);
         }
-      },
-      (error) => {
-        console.log('ERROR while fetching Votes: ' + error);
-      }
-    );
+      );
+
+
+    } else {
+      this.accountService.getUVotes().subscribe(
+        (response: any) => {
+          if (response.status === 'ok') {
+            this.accountService.setOptions(response.voting);
+          }
+        },
+        (error) => {
+          console.log('ERROR while fetching Votes: ' + error);
+        }
+      );
+    }
   }
 
   constructor(private accountService: AccountService) { }

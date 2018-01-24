@@ -29,14 +29,14 @@ export class VotingComponent implements OnInit {
       sum = sum + v.val;
     }
     for (let i = 0; i < toChange.length; i++ ) {
-      const per = (  toChange[i].val / sum ) * 100;
+      const per = ( toChange[i].val / sum ) * 100;
       toChange[i].width =  per + '%';
     }
-    toChange =  toChange.sort((n1, n2) => n2.val - n1.val);
-    this.votes =  toChange;
+    toChange = toChange.sort((n1, n2) => n2.val - n1.val);
+    this.votes = toChange;
   }
 
-  submiteVote() {
+  submitVote() {
     this.isWaiting = true;
     this.accountService.submitVote(this.userVote).subscribe(
       (response: any) => {
@@ -65,6 +65,18 @@ export class VotingComponent implements OnInit {
     if (this.loggedInUser.gender === 'MALE') {
       this.userImage = 'assets/boy.png';
     }
+
+
+    this.accountService.reflectNewChange.subscribe(
+      (response: any) => {
+        this.votes = response.options;
+        this.loggedInUser = response.user;
+        this.reorderOptions();
+      },
+      (error) => {
+        console.log('ERROR while fetching Votes: ' + error);
+      }
+    );
 
     if (isUndefined(this.accountService.userOptions)) {
         this.accountService.getVotes().subscribe(

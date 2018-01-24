@@ -11,9 +11,11 @@ export class AccountService {
 
   public loggedInsuccess = new EventEmitter<boolean>();
   public options = new EventEmitter<OptionModal[]>();
+  public reflectNewChange = new EventEmitter<{ 'options': OptionModal[], 'user': UserModal }>();
   public userLoggedIn = false;
   public userOptions: OptionModal[];
   public userRegistered = false;
+  public updatedUser: UserModal;
   private baseURL = 'http://ec2-13-58-146-253.us-east-2.compute.amazonaws.com/';
 
   constructor(private http: HttpClient) {}
@@ -39,6 +41,11 @@ export class AccountService {
       })
     );
     return promise;
+  }
+
+  updateUser(update: UserModal) {
+    this.updatedUser = update;
+    this.reflectNewChange.emit({'options': this.userOptions, 'user':  this.updatedUser});
   }
 
   getLoginUser(): any {
