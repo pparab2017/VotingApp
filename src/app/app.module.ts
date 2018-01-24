@@ -18,6 +18,7 @@ import {NoAuthGaurd} from './no-auth-gaurd.service';
 import {DropdownDirective} from './directives/dropdown.directive';
 import {FormsModule} from '@angular/forms';
 import { InfoComponent } from './info/info.component';
+import { ErrorComponent } from './error/error.component';
 
 
 
@@ -37,7 +38,8 @@ const appRoutes: Routes = [
     VotingComponent,
     DoughnutChartComponent,
     DropdownDirective,
-    InfoComponent
+    InfoComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,
