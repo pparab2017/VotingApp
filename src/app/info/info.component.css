@@ -1,5 +1,10 @@
 .info{
   padding-bottom: 10px;
   padding-top: 10px;
-  border-top: dashed 1px #aaa;
+  border-top: dashed 1px #ddd;
+}
+
+p{
+  font-size: smaller !important;
+  font-family: 'Lato', sans-serif;
 }

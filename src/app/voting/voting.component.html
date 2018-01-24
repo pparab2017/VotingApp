@@ -9,6 +9,8 @@
 <p  *ngIf="loggedInUser.vote !== ''"  class="text-center border lightText" >You voted for {{loggedInUser.vote}}!</p>
 
 <div class="col-md-12 components">
+  <b>Your favorite fruit?</b>
+
   <div class="outer-vote-div" *ngFor="let v of votes; let i = index">
     <p class="voteText">
       <input id="{{v.name}}" type="radio"  [value]="v.name" #vote  name="fruit"
