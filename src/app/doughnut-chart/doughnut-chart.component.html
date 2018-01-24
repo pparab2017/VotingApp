@@ -3,11 +3,9 @@
   <canvas baseChart
           [data]="doughnutChartData"
           [labels]="doughnutChartLabels"
-          [colors]="backgroundColor"
           [chartType]="doughnutChartType"
           (chartHover)="chartHovered($event)"
           (chartClick)="chartClicked($event)"></canvas>
-
   <a class="text-center" style="cursor: pointer" (click)="change()">Refresh</a>
 </div>
 

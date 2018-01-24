@@ -1,28 +1,37 @@
 
-<div class="col-md-12 components logged-in-user" style="margin-bottom: 20px;">
-  <h5 style="color: #fff"><img src="{{userImage}}" style="height:60px;margin-right: 30px">
-  Welcome, {{loggedInUser.userFname + ' ' +  loggedInUser.userLname}}  |  {{loggedInUser.userEmail}}  </h5>
+<div class="col-md-12 components logged-in-user">
+  <h5 class="user-img"><img src="{{userImage}}" >
+      Welcome, {{loggedInUser.userFname + ' ' +  loggedInUser.userLname}} | {{loggedInUser.userEmail}}
+  </h5>
 </div>
 
-
-<p  *ngIf="loggedInUser.vote === ''"  class="text-center border" style="color: #777">Please vote for your favorite fruit!</p>
-<p  *ngIf="loggedInUser.vote !== ''"  class="text-center border" style="color: #777">You voted for {{loggedInUser.vote }}!</p>
+<p  *ngIf="loggedInUser.vote === ''"  class="text-center border lightText" >Please vote for your favorite fruit!</p>
+<p  *ngIf="loggedInUser.vote !== ''"  class="text-center border lightText" >You voted for {{loggedInUser.vote}}!</p>
 
 <div class="col-md-12 components">
-  <!--<div style="width: 100%; height: 100%; clear: both; opacity: 0.3; position: absolute; z-index: 999; background-color: #dddddd"></div>-->
-
-  <div class="outer-vote-div" *ngFor="let v of votes ; let i = index">
-    <p style="padding: 10px;  color: #4CAF50; position: absolute">
+  <div class="outer-vote-div" *ngFor="let v of votes; let i = index">
+    <p class="voteText">
       <input id="{{v.name}}" type="radio"  [value]="v.name" #vote  name="fruit"
-             *ngIf="loggedInUser.vote === ''" required (click)="onclick(vote.value)">
-      &nbsp; <b>{{v.name }} </b> <span class="badge" style="background-color: #4CAF50">{{ v.val }}</span>
-      <span *ngIf="v.name === loggedInUser.vote" class="glyphicon glyphicon-star" style="color: #4CAF50;"></span>
+             *ngIf="loggedInUser.vote === ''"
+             (click)="onclick(vote.value)" required>
+      &nbsp;
+      <b>{{v.name }} </b>
+      <span class="badge voteBackground">{{ v.val }}</span>
+      <span *ngIf="v.name === loggedInUser.vote" class="glyphicon glyphicon-star voteColor" ></span>
     </p>
-    <div class="inner-vote-div" [ngStyle]="{ 'width': v.width}">
-
+    <div class="inner-vote-div" [ngStyle]="{'width': v.width}">
     </div>
   </div>
   <br>
-  <button [disabled]="!userVote" *ngIf="loggedInUser.vote === ''" type="submit" class="btn btn-success" (click)="submiteVote()">Submit Vote</button>
+  <button [disabled]="!userVote"
+          *ngIf="loggedInUser.vote === ''"
+          type="submit"
+          class="btn btn-success"
+          (click)="submiteVote()">
+    Submit Vote
+  </button>
+</div>
 
+<div *ngIf="isWaiting" class="waitDiv">
+  <div> <h2>Please Wait...</h2></div>
 </div>

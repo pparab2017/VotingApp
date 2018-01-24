@@ -12,11 +12,10 @@ import {NgForm} from '@angular/forms';
 export class LoginComponent implements OnInit {
 
   constructor(private accountService: AccountService, private router: Router) { }
-  registerdJustnow: boolean;
-  errorMessage = '';
+  public registerdJustnow: boolean;
+  public errorMessage = '';
 
   onclick(email: string, pass: string, valid: NgForm) {
-    console.log(valid);
     if (valid.valid) {
       this.accountService.login(email, pass).subscribe(
         (response: any) => {
@@ -25,7 +24,6 @@ export class LoginComponent implements OnInit {
             this.accountService.userLoggedIn = true;
             this.accountService.storeUserObject(response.user);
             this.accountService.setOptions(response.voting);
-
           }
         },
         (error) => {
@@ -35,19 +33,8 @@ export class LoginComponent implements OnInit {
 
     }
   }
+
   ngOnInit() {
-    this.accountService.getUVotes().subscribe(
-      (response: any) => {
-        if (response.status === 'ok') {
-          this.accountService.setOptions(response.voting);
-        }
-      },
-      (error) => {
-        this.errorMessage = error;
-      }
-    );
-
-
     this.registerdJustnow = this.accountService.getRegistered();
     this.accountService.setRegistered(false);
   }

@@ -12,20 +12,18 @@ import {isUndefined} from 'util';
   styleUrls: ['./voting.component.css']
 })
 export class VotingComponent implements OnInit {
-  votes: OptionModal[];
-  loggedInUser: UserModal;
-  userImage = '../assets/girl.png';
-  userVote = '';
+  public votes: OptionModal[];
+  public loggedInUser: UserModal;
+  public userImage = 'assets/girl.png';
+  public userVote = '';
+  public isWaiting = false;
 
   constructor(private accountService: AccountService) {
-  this.votes = new Array<OptionModal>();
+    this.votes = new Array<OptionModal>();
   }
-
-
 
   reorderOptions() {
     let toChange = this.votes;
-    console.log(this.votes);
     let sum = 0;
     for (const v of  toChange) {
       sum = sum + v.val;
@@ -39,6 +37,7 @@ export class VotingComponent implements OnInit {
   }
 
   submiteVote() {
+    this.isWaiting = true;
     this.accountService.submitVote(this.userVote).subscribe(
       (response: any) => {
         if (response.status === 'ok') {
@@ -46,29 +45,26 @@ export class VotingComponent implements OnInit {
           this.votes = this.accountService.userOptions;
           this.loggedInUser = response.user;
           this.reorderOptions();
+          this.isWaiting = false;
         }
       },
       (error) => {
-        console.log('in the error');
-        console.log(error);
+        console.log('ERROR while fetching Votes: ' + error);
+        this.isWaiting = false;
       }
     );
     this.reorderOptions();
   }
 
-
   onclick(uservote: string) {
-    console.log(uservote);
     this.userVote = uservote;
   }
 
   ngOnInit() {
-
     this.loggedInUser = this.accountService.getLoginUser() ? this.accountService.getLoginUser() : new UserModal();
     if (this.loggedInUser.gender === 'MALE') {
-      this.userImage = '../assets/boy.png';
+      this.userImage = 'assets/boy.png';
     }
-
 
     if (isUndefined(this.accountService.userOptions)) {
         this.accountService.getVotes().subscribe(
@@ -81,17 +77,13 @@ export class VotingComponent implements OnInit {
             }
           },
           (error) => {
-            console.log('in the error');
-            console.log(error);
+            console.log('ERROR while fetching Votes: ' + error);
           }
         );
     } else {
         this.votes = this.accountService.userOptions;
-      this.reorderOptions();
-      }
-
-
-
+        this.reorderOptions();
+    }
 
   }
 

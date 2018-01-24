@@ -12,7 +12,6 @@ export class HeaderComponent implements OnInit {
 
   constructor(private accountService: AccountService, private router: Router) {
     router.events.subscribe((val) => {
-
       if (this.accountService.getLoginUser()) {
         this.user = this.accountService.getLoginUser();
         this.username = this.user.userFname + ' ' + this.user.userLname;

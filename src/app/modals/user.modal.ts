@@ -8,4 +8,9 @@ export class UserModal {
   public userEmail: string;
   public vote: string;
 
+  public getFullName() {
+    return this.userFname + ' ' + this.userLname;
+  }
+
+
 }

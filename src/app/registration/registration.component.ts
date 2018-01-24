@@ -9,20 +9,10 @@ import {Router} from '@angular/router';
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent implements OnInit {
-  errorMessage = '';
+  public errorMessage = '';
   constructor(private accountService: AccountService, private router: Router) { }
 
   ngOnInit() {
-    this.accountService.getUVotes().subscribe(
-      (response: any) => {
-        if (response.status === 'ok') {
-          this.accountService.setOptions(response.voting);
-        }
-      },
-      (error) => {
-        this.errorMessage = error.error.message;
-      }
-    );
   }
 
   onclick(email: string, pass: string, fname: string, lname: string, f: NgForm) {
@@ -41,7 +31,7 @@ export class RegistrationComponent implements OnInit {
         }
       );
 
-    }else {
+    } else {
 
     }
   }

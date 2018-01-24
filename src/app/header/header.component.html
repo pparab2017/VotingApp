@@ -1,38 +1,36 @@
 
 
 <nav class="navbar navbar-default">
-   <!-- limit the voe port like continer-->
   <div class="container">
     <div class="row">
       <div class="">
 
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a href="#" class="navbar-brand"><span class="glyphicon glyphicon-heart"></span> Voting App!</a>
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a href="#" class="navbar-brand"><span class="glyphicon glyphicon-heart"></span> Voting App!</a>
+          </div>
+
+          <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+              <li><a routerLink="/" >Login</a> </li>
+              <li><a routerLink="/register" >Register</a> </li>
+            </ul>
+
+            <ul *ngIf="isLoggedIn" class="nav navbar-nav navbar-right">
+              <li class="dropdown" appDropdown>
+                <a  class="dropdown-toggle" role="button">{{username}} <span class="caret"></span> </a>
+                <ul class="dropdown-menu">
+                  <li> <a style="cursor: pointer" (click)="logout()"> logout</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+      </div>
     </div>
-
-    <div class="collapse navbar-collapse">
-      <ul class="nav navbar-nav">
-        <li><a routerLink="/" >Login</a> </li>
-        <li><a routerLink="/register" >Register</a> </li>
-      </ul>
-
-
-      <ul *ngIf="isLoggedIn" class="nav navbar-nav navbar-right">
-        <li class="dropdown" appDropdown>
-          <a  class="dropdown-toggle" role="button">{{username}} <span class="caret"></span> </a>
-          <ul class="dropdown-menu">
-            <li> <a style="cursor: pointer" (click)="logout()" > logout</a></li>
-
-          </ul>
-        </li>
-      </ul>
-    </div>
-
   </div>
-
-      </div></div></div>
-
 </nav>
 
 

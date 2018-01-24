@@ -7,11 +7,8 @@ import {AccountService} from './account.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit  {
-  title = 'Voting App';
   loggedIn = false;
 
-
-  selectedMenu = 'login';
   constructor(private accountService: AccountService) {}
 
   ngOnInit() {
@@ -20,11 +17,20 @@ export class AppComponent implements OnInit  {
       this.loggedIn = true;
     }
 
-
-
     this.accountService.loggedInsuccess.subscribe(
       (isTrue: boolean) => {
         this.loggedIn = isTrue;
+      }
+    );
+
+    this.accountService.getUVotes().subscribe(
+      (response: any) => {
+        if (response.status === 'ok') {
+          this.accountService.setOptions(response.voting);
+        }
+      },
+      (error) => {
+        console.log('ERROR: While fetching Votes: ' + error);
       }
     );
 
