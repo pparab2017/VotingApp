@@ -26,6 +26,7 @@ const appRoutes: Routes = [
   {path: '', component: LoginComponent, canActivate: [NoAuthGaurd]},
   {path: 'register', component: RegistrationComponent, canActivate: [NoAuthGaurd]},
   {path: 'home', component: VotingComponent, canActivate: [AuthGaurd]},
+  {path: 'not-found', component: ErrorComponent},
   {path: '**', redirectTo: '/not-found'}
 ]
 
